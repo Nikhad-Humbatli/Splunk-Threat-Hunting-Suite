@@ -1,0 +1,5 @@
+index=windows sourcetype="XmlWinEventLog:Microsoft-Windows-Sysmon/Operational" EventCode=10
+| eval TargetImage=lower(TargetImage)
+| search TargetImage="*\\lsass.exe"
+| stats count by _time, Computer, SourceImage, GrantedAccess
+| where GrantedAccess="0x1410" OR GrantedAccess="0x1010"
